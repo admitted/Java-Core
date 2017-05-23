@@ -73,7 +73,7 @@ AbstractSequentialList 实现了`get(int index)、set(int index, E element)、ad
 
 ## LinkedList数据结构
 
-#### LinkedList的继承关系
+### LinkedList的继承关系
 
 ```
 java.lang.Object
@@ -88,7 +88,7 @@ public class LinkedList<E>
     implements List<E>, Deque<E>, Cloneable, java.io.Serializable {}
 ```
  
-LinkedList与Collection关系如下图：
+### LinkedList与Collection关系图：
 
 ![](media/14954627364690.jpg)
 
