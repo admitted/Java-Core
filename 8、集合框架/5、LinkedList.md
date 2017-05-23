@@ -126,6 +126,8 @@ public class LinkedList<E>
     implements List<E>, Deque<E>, Cloneable, java.io.Serializable
 {
     // 链表的表头，表头不包含任何数据。Entry是个链表类数据结构。
+    // transient声明一个实例变量，当对象存储时，它的值不需要维持。
+    // 换句话来说就是，用transient关键字标记的成员变量不参与序列化过程。
     private transient Entry<E> header = new Entry<E>(null, null, null);
 
     // LinkedList中元素个数
@@ -859,7 +861,7 @@ try {
 测试这些遍历方式效率的代码如下：
 
  ```
- import java.util.List;
+import java.util.List;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -1050,7 +1052,7 @@ iteratorThroughRemoveFirst：2 ms
 iteratorThroughRemoveLast：2 ms
 ```
 
-由此可见，遍历LinkedList时，使用removeFist()或removeLast()效率最高。但用它们遍历时，会删除原始数据；若单纯只读取，而不删除，应该使用第3种遍历方式。
+由此可见，遍历LinkedList时，使用removeFist()或removeLast()效率最高。但用它们遍历时，会删除原始数据；若单纯只读取，而不删除，应该使用第3种 (增强 for循环) 遍历方式。
 无论如何，千万不要通过随机访问去遍历LinkedList！
 
  
@@ -1067,8 +1069,6 @@ import java.util.NoSuchElementException;
 /*
  * @desc LinkedList测试程序。
  *
- * @author skywang
- * @email  kuiwu-wang@163.com
  */
 public class LinkedListTest {
     public static void main(String[] args) {

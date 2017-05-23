@@ -399,7 +399,7 @@ public class CopyOnWriteArrayList<E>
 3. ArrayList的Iterator实现类中调用next()时，会“调用checkForComodification()比较‘expectedModCount’和‘modCount’的大小”；但是，CopyOnWriteArrayList的Iterator实现类中，没有所谓的checkForComodification()，更不会抛出ConcurrentModificationException异常！ 
 
 
-#### 为什么CopyOnWriteArrayList可以不比较modCount也能保证数据一致性？
+### 为什么CopyOnWriteArrayList可以不比较modCount也能保证数据一致性？
 
 因为getArray()返回的array的类型是volatile的（强制内存一致性）
 
