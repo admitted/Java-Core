@@ -897,6 +897,10 @@ transient Entry[] table;
 HashMap中的key-value都是存储在Entry数组中的。
 
 #### 2、数据节点Entry的数据结构
+##### 结构图表
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14967626283955.jpg)
+
+
 
 ```
 static class Entry<K,V> implements Map.Entry<K,V> {
