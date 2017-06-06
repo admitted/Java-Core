@@ -1,0 +1,69 @@
+﻿###########################修改文件后需要进行以下操作########################
+# git rm -r --cached .                #清除缓存                       #######
+# git add .                           #重新trace file                 #######
+# git commit -m "update .gitignore"   #提交和注释                     #######
+# git push origin master              #可选，如果需要同步到remote上的 #######
+#############################################################################
+
+#------Mac global files-----
+.DS_Store
+.DS_Store?
+*.swp
+._*
+.Spotlight-V100
+.Trashes
+
+#------ Windows ------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.dll
+
+#------ Python -------------
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+#------ Java & JavaWeb------
+# 产生.class 的 bin 文件夹
+bin/
+classes/
+*.class
+
+#------ maven ignore--------
+target/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar
+*.tar.gz
+
+#------ eclipse ignore------
+.settings/
+.project
+.classpath
+
+#------ idea ignore---------
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+*.java~
+*.properties~
+*.xml~
+
+# MWEB 配置文件
+*.MWebMetaData
+media/
+
