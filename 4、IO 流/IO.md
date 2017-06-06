@@ -6,15 +6,15 @@
 字节流和字符流的原理是相同的，只不过处理的单位不同而已。后缀是Stream是字节流，而后缀是Reader，Writer是字符流。
  
 节点流：直接与数据源相连，读入或读出。
-![](media/14948633565434.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14948633565434.jpg)
 
 直接使用节点流，读写不方便，为了更快的读写文件，才有了处理流。
-![](media/14948633652124.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14948633652124.jpg)
 
 处理流：与节点流一块使用，在节点流的基础上，再套接一层，套接在节点流上的就是处理流。
 
 
-![](media/14948631079354.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14948631079354.jpg)
 
 
 ## 1、java.io包下的File类
@@ -42,7 +42,7 @@ public File(String pathname)
 public File(String parent,String child)
           以parent为父路径，child为子路径创建File对象。
 ```
-![](media/14948455642362.png)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14948455642362.png)
 
 
 ## 2、IO 流的结构

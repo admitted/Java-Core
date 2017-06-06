@@ -90,7 +90,7 @@ public class LinkedList<E>
  
 ### LinkedList与Collection关系图：
 
-![](media/14954627364690.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14954627364690.jpg)
 
 
 LinkedList的本质是双向链表。

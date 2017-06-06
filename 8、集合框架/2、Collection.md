@@ -2,7 +2,7 @@
 
 Collection框架类的关系图：
 
-![](media/14954368188311.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14954368188311.jpg)
 
 
 

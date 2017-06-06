@@ -103,7 +103,7 @@ public class HashMap<K,V>
 
 HashMap与Map关系如下图：
 
-![](media/14956005736815.jpg) 
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14956005736815.jpg) 
 
 
 从图中可以看出： 

@@ -19,7 +19,7 @@ public class Stack<E> extends Vector<E> {}
  
 
 ## Stack和Collection的关系如下图：
-![](media/14955293124748.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14955293124748.jpg)
 
 ## Stack的构造函数
 Stack只有一个默认构造函数，如下：

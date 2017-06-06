@@ -87,7 +87,7 @@ public class ArrayList<E> extends AbstractList<E>
  
 ArrayList与Collection关系如下图：
 
-![](media/14954399703939.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14954399703939.jpg)
 
 ArrayList包含了两个重要的对象：elementData 和 size。
 

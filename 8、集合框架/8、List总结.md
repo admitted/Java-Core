@@ -2,7 +2,7 @@
 
 先回顾一下List的框架图
 
-![](media/14955300758588.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14955300758588.jpg)
 
 
 

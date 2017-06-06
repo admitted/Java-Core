@@ -98,7 +98,7 @@ public class Vector<E>
 
 ### Vector与Collection关系图：
 
-![](media/14955233195949.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14955233195949.jpg)
 
 
 Vector的数据结构和ArrayList差不多，它包含了3个成员变量：elementData , elementCount， capacityIncrement。
