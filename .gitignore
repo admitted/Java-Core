@@ -64,6 +64,6 @@ target/
 *.xml~
 
 # MWEB 配置文件
-*.MWebMetaData
+.MWebMetaData
 media/
 
