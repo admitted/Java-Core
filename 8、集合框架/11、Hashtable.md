@@ -72,7 +72,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
 
 ### Hashtable与Map关系如下图：
 
-![](media/14967324038221.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-08-14967324038221.jpg)
 
 
 
