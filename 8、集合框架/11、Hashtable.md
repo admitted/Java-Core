@@ -1521,8 +1521,6 @@ import java.util.*;
 
 /*
  * @desc Hashtable的测试程序。
- *
- * @author skywang
  */
 public class HashtableTest {
     public static void main(String[] args) {
@@ -1584,8 +1582,6 @@ import java.util.*;
 
 /*
  * @desc Hashtable的测试程序。
- *
- * @author skywang
  */
 public class HashtableTest {
     public static void main(String[] args) {
