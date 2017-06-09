@@ -15,7 +15,7 @@
 
 处理流：与节点流一块使用，在节点流的基础上，再套接一层，套接在节点流上的就是处理流。
 
-![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14948631079354.jpg)
+![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14948631079354.jpg?imageMogr2/blur/1x0/quality/50|imageslim)
 
 
 ## 1、java.io包下的File类
