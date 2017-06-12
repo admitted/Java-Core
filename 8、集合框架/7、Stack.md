@@ -1,13 +1,11 @@
-# Stack
-
-## Stack简介
+# Stack简介
 
 Stack是栈。它的特性是：先进后出(FILO, First In Last Out)。
 
 Java工具包中的Stack是继承于Vector(矢量队列)的，由于Vector是通过数组实现的，这就意味着，Stack也是通过数组实现的，而非链表。当然，我们也可以将LinkedList当作栈来使用！在 Vector 中，已经详细介绍过Vector的数据结构，这里就不再对Stack的数据结构进行说明了。
 
-## Stack的继承关系
-```
+# Stack的继承关系
+```java
 java.lang.Object
 ↳     java.util.AbstractCollection<E>
    ↳     java.util.AbstractList<E>
@@ -18,21 +16,21 @@ public class Stack<E> extends Vector<E> {}
 ```
  
 
-## Stack和Collection的关系如下图：
+# Stack和Collection的关系如下图：
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14955293124748.jpg)
 
-## Stack的构造函数
+# Stack的构造函数
 Stack只有一个默认构造函数，如下：
 
-```
+```java
 Stack()
 ```
 
-## Stack的API
+# Stack的API
 
 Stack是栈，它常用的API如下：
 
-```
+```java
              boolean       empty()
 synchronized E             peek()
 synchronized E             pop()
@@ -43,11 +41,11 @@ synchronized int           search(Object o)
 由于Stack和继承于Vector，因此它也包含Vector中的全部API。
 
 
-## Stack源码解析(基于JDK1.6.0_45)
+# Stack源码解析(基于JDK1.6.0_45)
 
 Stack的源码非常简单，下面我们对它进行学习。 
 
-```
+```java
 package java.util;
 
 public class Stack<E> extends Vector<E> {
@@ -116,11 +114,11 @@ public class Stack<E> extends Vector<E> {
 2. Stack继承于Vector，意味着Vector拥有的属性和功能，Stack都拥有。
 
   
-## Vector示例
+# Stack示例
 
 下面我们通过实例学习如何使用Stack
 
-```
+```java
 import java.util.Stack;
 import java.util.Iterator;
 import java.util.List;
@@ -187,7 +185,7 @@ public class StackTest {
 
 运行结果： 
 
-```
+```java
 1 2 3 4 5 
 the postion of 2 is:4
 1 2 3 4 

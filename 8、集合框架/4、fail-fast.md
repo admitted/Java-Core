@@ -1,6 +1,4 @@
-# Fail-Fast
-
-## 1、fail-fast简介
+# 1、fail-fast简介
 
 fail-fast 机制是Java集合(Collection)中的一种错误机制。当多个线程对同一个集合的内容进行操作时，就可能会产生fail-fast事件。
 
@@ -8,8 +6,8 @@ fail-fast 机制是Java集合(Collection)中的一种错误机制。当多个线
 
 在详细介绍fail-fast机制的原理之前，先通过一个示例来认识fail-fast。
 
-## 2、fail-fast示例
-```
+# 2、fail-fast示例
+```java
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -89,13 +87,13 @@ public class FastFailTest {
 
  
 
-## 3、fail-fast解决办法
+# 3、fail-fast解决办法
 
 fail-fast机制，是一种错误检测机制。它只能被用来检测错误，因为JDK并不保证fail-fast机制一定会发生。若在多线程环境下使用fail-fast机制的集合，建议使用“java.util.concurrent包下的类”去取代“java.util包下的类”。
 所以，本例中只需要将ArrayList替换成java.util.concurrent包下对应的类即可。
 即，将代码
 
-```
+```java
 private static List<String> list = new ArrayList<String>();
 ```
 替换为
@@ -105,14 +103,14 @@ private static List<String> list = new CopyOnWriteArrayList<String>();
 ```
 则可以解决该办法。
 
-## 4 fail-fast原理
+# fail-fast原理
 
 产生fail-fast事件，是通过抛出ConcurrentModificationException异常来触发的。
 那么，ArrayList是如何抛出ConcurrentModificationException异常的呢?
 
 我们知道，ConcurrentModificationException是在操作Iterator时抛出的异常。我们先看看Iterator的源码。ArrayList的Iterator是在父类AbstractList.java中实现的。代码如下： 
 
-```
+```java
 package java.util;
 
 public abstract class AbstractList<E> extends AbstractCollection<E> implements List<E> {
@@ -190,8 +188,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 
 接下来，我们查看ArrayList的源码，来看看modCount是如何被修改的。
 
-
-```
+```java
 package java.util;
 
 public class ArrayList<E> extends AbstractList<E>
@@ -223,7 +220,6 @@ public class ArrayList<E> extends AbstractList<E>
         return true;
     }
 
-
     // 添加元素到指定的位置
     public void add(int index, E element) {
         if (index > size || index < 0)
@@ -248,7 +244,6 @@ public class ArrayList<E> extends AbstractList<E>
         size += numNew;
         return numNew != 0;
     }
-   
 
     // 删除指定位置的元素 
     public E remove(int index) {
@@ -265,7 +260,6 @@ public class ArrayList<E> extends AbstractList<E>
 
         return oldValue;
     }
-
 
     // 快速删除指定位置的元素 
     private void fastRemove(int index) {
@@ -294,6 +288,7 @@ public class ArrayList<E> extends AbstractList<E>
     ...
 }
 ```
+
 从中，我们发现：无论是add()、remove()，还是clear()，只要涉及到修改集合中的元素个数时，都会改变modCount的值。
 
 接下来，我们再系统的梳理一下fail-fast是怎么产生的。步骤如下：
@@ -312,12 +307,12 @@ public class ArrayList<E> extends AbstractList<E>
 即，当多个线程对同一个集合进行操作的时候，某线程访问集合的过程中，该集合的内容被其他线程所改变(即其它线程通过add、remove、clear等方法，改变了modCount的值)；这时，就会抛出ConcurrentModificationException异常，产生fail-fast事件。
  
 
-## 5、解决fail-fast的原理
+# 5、解决fail-fast的原理
 
 上面，说明了“解决fail-fast机制的办法”，也知道了“fail-fast产生的根本原因”。接下来，我们再进一步谈谈java.util.concurrent包中是如何解决fail-fast事件的。
 还是以和ArrayList对应的CopyOnWriteArrayList进行说明。我们先看看CopyOnWriteArrayList的源码：
 
-```
+```java
 package java.util.concurrent;
 import java.util.*;
 import java.util.concurrent.locks.*;
@@ -399,7 +394,7 @@ public class CopyOnWriteArrayList<E>
 3. ArrayList的Iterator实现类中调用next()时，会“调用checkForComodification()比较‘expectedModCount’和‘modCount’的大小”；但是，CopyOnWriteArrayList的Iterator实现类中，没有所谓的checkForComodification()，更不会抛出ConcurrentModificationException异常！ 
 
 
-### 为什么CopyOnWriteArrayList可以不比较modCount也能保证数据一致性？
+## 为什么CopyOnWriteArrayList可以不比较modCount也能保证数据一致性？
 
 因为getArray()返回的array的类型是volatile的（强制内存一致性）
 

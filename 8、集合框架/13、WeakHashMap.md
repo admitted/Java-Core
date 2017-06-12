@@ -1,6 +1,4 @@
-# WeakHashMap
-
-## WeakHashMap简介
+# WeakHashMap简介
 
 WeakHashMap 继承于AbstractMap，实现了Map接口。和HashMap一样，WeakHashMap 也是一个散列表，它存储的内容也是键值对(key-value)映射，而且键和值都可以是null。
 
@@ -18,11 +16,11 @@ WeakHashMap 继承于AbstractMap，实现了Map接口。和HashMap一样，WeakH
 和HashMap一样，WeakHashMap是不同步的。可以使用 Collections.synchronizedMap 方法来构造同步的 WeakHashMap。
 
 
-### WeakHashMap的构造函数
+# WeakHashMap的构造函数
 
 WeakHashMap共有4个构造函数,如下：
 
-```
+```java
 // 默认构造函数。
 WeakHashMap()
 
@@ -37,8 +35,8 @@ WeakHashMap(Map<? extends K, ? extends V> map)
 ```
  
 
-### WeakHashMap的API
-```
+# WeakHashMap的API
+```java
 void                   clear()
 Object                 clone()
 boolean                containsKey(Object key)
@@ -55,11 +53,11 @@ Collection<V>          values()
 ```
  
 
-## WeakHashMap数据结构
+# WeakHashMap数据结构
 
-### WeakHashMap的继承关系如下
+WeakHashMap的继承关系如下
 
-```
+```java
 java.lang.Object
    ↳     java.util.AbstractMap<K, V>
          ↳     java.util.WeakHashMap<K, V>
@@ -70,7 +68,7 @@ public class WeakHashMap<K,V>
 ```
  
 
-### WeakHashMap与Map关系如下图：
+WeakHashMap与Map关系如下图：
 
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-08-14969059989097.jpg)
 
@@ -88,11 +86,10 @@ public class WeakHashMap<K,V>
 
  
 
-## WeakHashMap源码解析(基于JDK1.6.0_45)
+# WeakHashMap源码解析(基于JDK1.6.0_45)
+下面对WeakHashMap的源码进行说明
 
- 下面对WeakHashMap的源码进行说明
-
-```
+```java
 package java.util;
 import java.lang.ref.WeakReference;
 import java.lang.ref.ReferenceQueue;
@@ -784,14 +781,14 @@ WeakReference是“弱键”实现的哈希表。
 另外，理解上面思想的重点是通过 expungeStaleEntries() 函数去理解。
 
  
-## WeakHashMap遍历方式
+# WeakHashMap遍历方式
 
-### 遍历WeakHashMap的键值对
+## 遍历WeakHashMap的键值对
 
 第一步：根据entrySet()获取WeakHashMap的“键值对”的Set集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是WeakHashMap对象
 // map中的key是String类型，value是Integer类型
 Integer integ = null;
@@ -806,12 +803,12 @@ while(iter.hasNext()) {
 ```
  
 
-### 遍历WeakHashMap的键
+## 遍历WeakHashMap的键
 
 第一步：根据keySet()获取WeakHashMap的“键”的Set集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是WeakHashMap对象
 // map中的key是String类型，value是Integer类型
 String key = null;
@@ -825,12 +822,12 @@ while (iter.hasNext()) {
 }
 ```
  
-### 遍历WeakHashMap的值
+## 遍历WeakHashMap的值
 
 第一步：根据value()获取WeakHashMap的“值”的集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是WeakHashMap对象
 // map中的key是String类型，value是Integer类型
 Integer value = null;
@@ -843,7 +840,7 @@ while (iter.hasNext()) {
 
 WeakHashMap遍历测试程序如下：
 
-```
+```java
 import java.util.Map;
 import java.util.Random;
 import java.util.Iterator;
@@ -950,11 +947,11 @@ public class WeakHashMapIteratorTest {
 ```
  
 
-第5部分 WeakHashMap示例
+# WeakHashMap示例
 
 下面通过实例来学习如何使用WeakHashMap
 
-```
+```java
 import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -1025,7 +1022,7 @@ public class WeakHashMapTest {
 
 运行结果： 
 
-```
+```java
 wmap:{three=w3, one=w1, two=w2}
 contains key two : true
 contains key five : false

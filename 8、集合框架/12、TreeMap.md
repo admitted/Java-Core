@@ -1,6 +1,4 @@
-# TreeMap
-
-## TreeMap 简介
+# TreeMap 简介
 
 TreeMap 是一个有序的key-value集合，它是通过红黑树实现的。
 TreeMap 继承于AbstractMap，所以它是一个Map，即一个key-value集合。
@@ -12,8 +10,8 @@ TreeMap基于红黑树（Red-Black tree）实现。该映射根据其键的自�
 TreeMap的基本操作 containsKey、get、put 和 remove 的时间复杂度是 log(n) 。
 另外，TreeMap是非同步的。 它的iterator 方法返回的迭代器是fail-fastl的。
 
-### TreeMap的构造函数
-```
+# TreeMap的构造函数
+```java
 // 默认构造函数。使用该构造函数，TreeMap中的元素按照自然排序进行排列。
 TreeMap()
 
@@ -28,8 +26,8 @@ TreeMap(SortedMap<K, ? extends V> copyFrom)
 ```
  
 
-### TreeMap的API
-```
+# TreeMap的API
+```java
 Entry<K, V>                ceilingEntry(K key)
 K                          ceilingKey(K key)
 void                       clear()
@@ -67,11 +65,11 @@ SortedMap<K, V>            tailMap(K fromInclusive)
 ```
  
 
-## TreeMap数据结构
+# TreeMap数据结构
 
-### TreeMap的继承关系
+TreeMap的继承关系
 
-```
+```java
 java.lang.Object
    ↳     java.util.AbstractMap<K, V>
          ↳     java.util.TreeMap<K, V>
@@ -82,7 +80,7 @@ public class TreeMap<K,V>
 ```
  
 
-### TreeMap与Map关系图：
+TreeMap与Map关系图：
 
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-08-14968879665172.jpg)
 
@@ -99,7 +97,7 @@ public class TreeMap<K,V>
 
  
 
-## TreeMap源码解析(基于JDK1.6.0_45)
+# TreeMap源码解析(基于JDK1.6.0_45)
 
 为了更了解TreeMap的原理，下面对TreeMap源码代码作出分析。我们先给出源码内容，后面再对源码进行详细说明，当然，源码内容中也包含了详细的代码注释。
 
@@ -117,7 +115,7 @@ TreeMap提供了操作“key”、“key-value”、“value”等方法，也�
 TreeMap本质上是一颗红黑树。要彻底理解TreeMap，建议读者先理解红黑树。关于红黑树的原理，可以参考：红黑树(一) 原理和算法详细介绍 http://www.cnblogs.com/skywang12345/p/3245399.html#a1
 
 
-```
+```java
 package java.util;
 
 public class TreeMap<K,V>
@@ -2171,89 +2169,89 @@ implements NavigableMap<K,V>, Cloneable, java.io.Serializable
 ```
 
 
-### TreeMap的红黑树相关内容
+## TreeMap的红黑树相关内容
 
 TreeMap中于红黑树相关的主要函数有:
-#### 1 数据结构
+### 数据结构
 
-##### 1.1 红黑树的节点颜色--红色
-```
+#### 红黑树的节点颜色--红色
+```java
 private static final boolean RED = false;
 ```
 
-##### 1.2 红黑树的节点颜色--黑色
-```
+#### 红黑树的节点颜色--黑色
+```java
 private static final boolean BLACK = true;
 ```
 
-##### 1.3 “红黑树的节点”对应的类。
-```
+####  “红黑树的节点”对应的类。
+```java
 static final class Entry<K,V> implements Map.Entry<K,V> { ... }
 Entry包含了6个部分内容：key(键)、value(值)、left(左孩子)、right(右孩子)、parent(父节点)、color(颜色)
 Entry节点根据key进行排序，Entry节点包含的内容为value。
 ```
  
-#### 2 相关操作
+### 相关操作
 
-##### 2.1 左旋
-```
+#### 左旋
+```java
 private void rotateLeft(Entry<K,V> p) { ... }
 ```
 
-##### 2.2 右旋
-```
+#### 右旋
+```java
 private void rotateRight(Entry<K,V> p) { ... }
 ```
 
-##### 2.3 插入操作
-```
+#### 插入操作
+```java
 public V put(K key, V value) { ... }
 ```
 
-##### 2.4 插入修正操作
+#### 插入修正操作
 红黑树执行插入操作之后，要执行“插入修正操作”。
 目的是：保红黑树在进行插入节点之后，仍然是一颗红黑树
-```
+```java
 private void fixAfterInsertion(Entry<K,V> x) { ... }
 ```
 
-##### 2.5 删除操作
-```
+#### 删除操作
+```java
 private void deleteEntry(Entry<K,V> p) { ... }
 ```
 
-##### 2.6 删除修正操作
+#### 删除修正操作
 红黑树执行删除之后，要执行“删除修正操作”。
 目的是保证：红黑树删除节点之后，仍然是一颗红黑树
 
-```
+```java
 private void fixAfterDeletion(Entry<K,V> x) { ... }
 ```
 
 关于红黑树部分，这里主要是指出了TreeMap中那些是红黑树的主要相关内容。具体的红黑树相关操作API，这里没有详细说明，因为它们仅仅只是将算法翻译成代码。读者可以参考“红黑树(一) 原理和算法详细介绍”进行了解。
 
 
-### TreeMap的构造函数
+## TreeMap的构造函数
 
-#### 默认构造函数
+### 默认构造函数
 
 使用默认构造函数构造TreeMap时，使用java的默认的比较器比较Key的大小，从而对TreeMap进行排序。
 
-```
+```java
 public TreeMap() {
     comparator = null;
 }
 ```
 
-#### 带比较器的构造函数
-```
+### 带比较器的构造函数
+```java
 public TreeMap(Comparator<? super K> comparator) {
     this.comparator = comparator;
 }
 ```
 
-#### 带Map的构造函数，Map会成为TreeMap的子集
-```
+### 带Map的构造函数，Map会成为TreeMap的子集
+```java
 public TreeMap(Map<? extends K, ? extends V> m) {
     comparator = null;
     putAll(m);
@@ -2261,7 +2259,7 @@ public TreeMap(Map<? extends K, ? extends V> m) {
 ```
 该构造函数会调用putAll()将m中的所有元素添加到TreeMap中。putAll()源码如下：
 
-```
+```java
 public void putAll(Map<? extends K, ? extends V> m) {
     for (Map.Entry<? extends K, ? extends V> e : m.entrySet())
         put(e.getKey(), e.getValue());
@@ -2269,8 +2267,8 @@ public void putAll(Map<? extends K, ? extends V> m) {
 ```
 从中，我们可以看出putAll()就是将m中的key-value逐个的添加到TreeMap中。
 
-#### 带SortedMap的构造函数，SortedMap会成为TreeMap的子集
-```
+### 带SortedMap的构造函数，SortedMap会成为TreeMap的子集
+```java
 public TreeMap(SortedMap<K, ? extends V> m) {
     comparator = m.comparator();
     try {
@@ -2284,7 +2282,7 @@ public TreeMap(SortedMap<K, ? extends V> m) {
 而该构造函数的参数是SortedMap是一个有序的Map，我们通过buildFromSorted()来创建对应的Map。
 buildFromSorted涉及到的代码如下：
 
-```
+```java
 // 根据已经一个排好序的map创建一个TreeMap
     // 将map中的元素逐个添加到TreeMap中，并返回map的中间元素作为根节点。
     private final Entry<K,V> buildFromSorted(int level, int lo, int hi,
@@ -2355,13 +2353,13 @@ buildFromSorted涉及到的代码如下：
 第三，buildFromSorted添加到红黑树中时，只将level == redLevel的节点设为红色。第level级节点，实际上是buildFromSorted转换成红黑树后的最底端(假设根节点在最上方)的节点；只将红黑树最底端的阶段着色为红色，其余都是黑色。
 
 
-### TreeMap的Entry相关函数
+## TreeMap的Entry相关函数
 
 TreeMap的 firstEntry()、 lastEntry()、 lowerEntry()、 higherEntry()、 floorEntry()、 ceilingEntry()、 pollFirstEntry() 、 pollLastEntry() 原理都是类似的；下面以firstEntry()来进行详细说明
 
 我们先看看firstEntry()和getFirstEntry()的代码：
 
-```
+```java
 public Map.Entry<K,V> firstEntry() {
     return exportEntry(getFirstEntry());
 }
@@ -2381,7 +2379,7 @@ final Entry<K,V> getFirstEntry() {
 
 (01) getFirstEntry()返回的是Entry节点，而Entry是红黑树的节点，它的源码如下：
 
-```
+```java
 // 返回“红黑树的第一个节点”
 final Entry<K,V> getFirstEntry() {
     Entry<K,V> p = root;
@@ -2396,7 +2394,7 @@ final Entry<K,V> getFirstEntry() {
 
 (02) firstEntry()返回的是exportEntry(getFirstEntry())。下面我们看看exportEntry()干了些什么？
 
-```
+```java
 static <K,V> Map.Entry<K,V> exportEntry(TreeMap.Entry<K,V> e) {
     return e == null? null :
         new AbstractMap.SimpleImmutableEntry<K,V>(e);
@@ -2406,7 +2404,7 @@ static <K,V> Map.Entry<K,V> exportEntry(TreeMap.Entry<K,V> e) {
 
 SimpleImmutableEntry的实现在AbstractMap.java中，下面我们看看AbstractMap.SimpleImmutableEntry是如何实现的，代码如下：
 
-```
+```java
 public static class SimpleImmutableEntry<K,V>
 implements Entry<K,V>, java.io.Serializable
 {
@@ -2464,28 +2462,27 @@ implements Entry<K,V>, java.io.Serializable
 (02) 对firstEntry()返回的Entry对象只能进行getKey()、getValue()等读取操作；而对getFirstEntry()返回的对象除了可以进行读取操作之后，还可以通过setValue()修改值。
 
  
+## TreeMap的key相关函数
 
-### TreeMap的key相关函数
-
-TreeMap的firstKey()、lastKey()、lowerKey()、higherKey()、floorKey()、ceilingKey()原理都是类似的；下面以ceilingKey()来进行详细说明
+TreeMap的`firstKey()、lastKey()、lowerKey()、higherKey()、floorKey()、ceilingKey()`原理都是类似的；下面以ceilingKey()来进行详细说明
 
 ceilingKey(K key)的作用是“返回大于/等于key的最小的键值对所对应的KEY，没有的话返回null”，它的代码如下：
 
-```
+```java
 public K ceilingKey(K key) {
     return keyOrNull(getCeilingEntry(key));
 }
 ```
 ceilingKey()是通过getCeilingEntry()实现的。keyOrNull()的代码很简单，它是获取节点的key，没有的话，返回null。
 
-```
+```java
 static <K,V> K keyOrNull(TreeMap.Entry<K,V> e) {
     return e == null? null : e.key;
 }
 ```
 getCeilingEntry(K key)的作用是“获取TreeMap中大于/等于key的最小的节点，若不存在(即TreeMap中所有节点的键都比key大)，就返回null”。它的实现代码如下：
 
-```
+```java
 final Entry<K,V> getCeilingEntry(K key) {
     Entry<K,V> p = root;
     while (p != null) {
@@ -2526,13 +2523,13 @@ final Entry<K,V> getCeilingEntry(K key) {
 ```
  
 
-### TreeMap的values()函数
+## TreeMap的values()函数
 
 values() 返回“TreeMap中值的集合”
 
 values()的实现代码如下：
 
-```
+```java
 public Collection<V> values() {
     Collection<V> vs = values;
     return (vs != null) ? vs : (values = new Values());
@@ -2542,7 +2539,7 @@ public Collection<V> values() {
 
 那么Values()是如何实现的呢？ 没错！由于返回的是值的集合，那么Values()肯定返回一个集合；而Values()正好是集合类Value的构造函数。Values继承于AbstractCollection，它的代码如下：
 
-```
+```java
 // ”TreeMap的值的集合“对应的类，它集成于AbstractCollection
 class Values extends AbstractCollection<V> {
     // 返回迭代器
@@ -2581,7 +2578,7 @@ class Values extends AbstractCollection<V> {
 size() 的实现非常简单，Values集合中元素的个数=该TreeMap的元素个数。(TreeMap每一个元素都有一个值嘛！)
 iterator() 则返回一个迭代器，用于遍历Values。下面，我们一起可以看看iterator()的实现：
 
-```
+```java
 public Iterator<V> iterator() {
     return new ValueIterator(getFirstEntry());
 }
@@ -2601,7 +2598,7 @@ final class ValueIterator extends PrivateEntryIterator<V> {
 
 说明：ValueIterator的代码很简单，它的主要实现应该在它的父类PrivateEntryIterator中。下面我们一起看看PrivateEntryIterator的代码：
 
-```
+```java
 abstract class PrivateEntryIterator<T> implements Iterator<T> {
     // 下一节点
     Entry<K,V> next;
@@ -2666,13 +2663,13 @@ abstract class PrivateEntryIterator<T> implements Iterator<T> {
 
  
 
-### TreeMap的entrySet()函数
+## TreeMap的entrySet()函数
 
 entrySet() 返回“键值对集合”。顾名思义，它返回的是一个集合，集合的元素是“键值对”。
 
 下面，我们看看它是如何实现的？entrySet() 的实现代码如下：
 
-```
+```java
 public Set<Map.Entry<K,V>> entrySet() {
     EntrySet es = entrySet;
     return (es != null) ? es : (entrySet = new EntrySet());
@@ -2732,7 +2729,7 @@ EntrySet是一个集合，它继承于AbstractSet。而AbstractSet实现了除si
 size() 的实现非常简单，AbstractSet集合中元素的个数=该TreeMap的元素个数。
 iterator() 则返回一个迭代器，用于遍历AbstractSet。从上面的源码中，我们可以发现iterator() 是通过EntryIterator实现的；下面我们看看EntryIterator的源码：
 
-```
+```java
 final class EntryIterator extends PrivateEntryIterator<Map.Entry<K,V>> {
     EntryIterator(Entry<K,V> first) {
         super(first);
@@ -2747,12 +2744,12 @@ final class EntryIterator extends PrivateEntryIterator<Map.Entry<K,V>> {
 
  
 
-### TreeMap实现的Cloneable接口
+## TreeMap实现的Cloneable接口
 
 TreeMap实现了Cloneable接口，即实现了clone()方法。
 clone()方法的作用很简单，就是克隆一个TreeMap对象并返回。
 
-```
+```java
 // 克隆一个TreeMap，并返回Object对象
 public Object clone() {
     TreeMap<K,V> clone = null;
@@ -2782,14 +2779,14 @@ public Object clone() {
 ```
  
 
-### TreeMap实现的Serializable接口
+## TreeMap实现的Serializable接口
 
 TreeMap实现java.io.Serializable，分别实现了串行读取、写入功能。
 串行写入函数是writeObject()，它的作用是将TreeMap的“容量，所有的Entry”都写入到输出流中。
 而串行读取函数是readObject()，它的作用是将TreeMap的“容量、所有的Entry”依次读出。
 readObject() 和 writeObject() 正好是一对，通过它们，我能实现TreeMap的串行传输。
 
-```
+```java
 // java.io.Serializable的写入函数
 // 将TreeMap的“容量，所有的Entry”都写入到输出流中
 private void writeObject(java.io.ObjectOutputStream s)
@@ -2830,8 +2827,7 @@ Java的serialization提供了一种持久化对象实例的机制。当持久化
 当一个对象被串行化的时候，transient型变量的值不包括在串行化的表示中，然而非transient型的变量是被包括进去的。
 
  
-
-### TreeMap实现的NavigableMap接口
+## TreeMap实现的NavigableMap接口
 
 firstKey()、lastKey()、lowerKey()、higherKey()、ceilingKey()、floorKey();
 firstEntry()、 lastEntry()、 lowerEntry()、 higherEntry()、 floorEntry()、 ceilingEntry()、 pollFirstEntry() 、 pollLastEntry();
@@ -2846,7 +2842,7 @@ TreeMap的排序方式是通过比较器，在创建TreeMap的时候，若指定
 
 理解了descendingMap()的反向原理之后，再讲解一下descendingMap()的代码。
 
-```
+```java
 // 获取TreeMap的降序Map
 public NavigableMap<K, V> descendingMap() {
     NavigableMap<K, V> km = descendingMap;
@@ -2859,7 +2855,7 @@ public NavigableMap<K, V> descendingMap() {
 
 从中，我们看出descendingMap()实际上是返回DescendingSubMap类的对象。下面，看看DescendingSubMap的源码：
 
-```
+```java
 static final class DescendingSubMap<K,V>  extends NavigableSubMap<K,V> {
     private static final long serialVersionUID = 912986545866120460L;
     DescendingSubMap(TreeMap<K,V> m,
@@ -2957,7 +2953,7 @@ static final class DescendingSubMap<K,V>  extends NavigableSubMap<K,V> {
 它继承于NavigableSubMap。而NavigableSubMap是一个继承于AbstractMap的抽象类；它包括2个子类——"(升序)AscendingSubMap"和"(降序)DescendingSubMap"。NavigableSubMap为它的两个子类实现了许多公共API。
 下面看看NavigableSubMap的源码。
 
-```
+```java
 static abstract class NavigableSubMap<K,V> extends AbstractMap<K,V>
     implements NavigableMap<K,V>, java.io.Serializable {
     // TreeMap的拷贝
@@ -3493,7 +3489,7 @@ NavigableSubMap源码很多，但不难理解；读者可以通过源码和注�
 
 其实，读完NavigableSubMap的源码后，我们可以得出它的核心思想是：它是一个抽象集合类，为2个子类——"(升序)AscendingSubMap"和"(降序)DescendingSubMap"而服务；因为NavigableSubMap实现了许多公共API。它的最终目的是实现下面的一系列函数：
 
-```
+```java
 headMap(K toKey, boolean inclusive) 
 headMap(K toKey)
 subMap(K fromKey, K toKey)
@@ -3505,9 +3501,9 @@ descendingKeySet()
 ```
  
 
-### TreeMap其它函数
+## TreeMap其它函数
 
-#### 1 顺序遍历和逆序遍历
+### 1 顺序遍历和逆序遍历
 
 TreeMap的顺序遍历和逆序遍历原理非常简单。
 由于TreeMap中的元素是从小到大的顺序排列的。因此，顺序遍历，就是从第一个元素开始，逐个向后遍历；而倒序遍历则恰恰相反，它是从最后一个元素开始，逐个往前遍历。
@@ -3516,7 +3512,7 @@ TreeMap的顺序遍历和逆序遍历原理非常简单。
 keyIterator()的作用是返回顺序的KEY的集合，
 descendingKeyIterator()的作用是返回逆序的KEY的集合。
 
-```
+```java
 keyIterator() 的代码如下：
 
 Iterator<K> keyIterator() {
@@ -3526,7 +3522,7 @@ Iterator<K> keyIterator() {
 说明：从中我们可以看出keyIterator() 是返回以“第一个节点(getFirstEntry)” 为其实元素的迭代器。
 KeyIterator的代码如下：
 
-```
+```java
 final class KeyIterator extends PrivateEntryIterator<K> {
     KeyIterator(Entry<K,V> first) {
         super(first);
@@ -3542,7 +3538,7 @@ final class KeyIterator extends PrivateEntryIterator<K> {
 
 descendingKeyIterator()的代码如下：
 
-```
+```java
 Iterator<K> descendingKeyIterator() {
     return new DescendingKeyIterator(getLastEntry());
 }
@@ -3550,7 +3546,7 @@ Iterator<K> descendingKeyIterator() {
 说明：从中我们可以看出descendingKeyIterator() 是返回以“最后一个节点(getLastEntry)” 为其实元素的迭代器。
 再看看DescendingKeyIterator的代码：
 
-```
+```java
 final class DescendingKeyIterator extends PrivateEntryIterator<K> {
     DescendingKeyIterator(Entry<K,V> first) {
         super(first);
@@ -3566,14 +3562,14 @@ final class DescendingKeyIterator extends PrivateEntryIterator<K> {
 至此，TreeMap的相关内容就全部介绍完毕了。若有错误或纰漏的地方，欢迎指正！
 
  
-## TreeMap遍历方式
+# TreeMap遍历方式
 
-### 4.1 遍历TreeMap的键值对
+## 遍历TreeMap的键值对
 
 第一步：根据entrySet()获取TreeMap的“键值对”的Set集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是TreeMap对象
 // map中的key是String类型，value是Integer类型
 Integer integ = null;
@@ -3587,12 +3583,12 @@ while(iter.hasNext()) {
 }
 ```
 
-### 4.2 遍历TreeMap的键
+## 4.2 遍历TreeMap的键
 
 第一步：根据keySet()获取TreeMap的“键”的Set集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是TreeMap对象
 // map中的key是String类型，value是Integer类型
 String key = null;
@@ -3607,12 +3603,12 @@ while (iter.hasNext()) {
 ```
  
 
-### 4.3 遍历TreeMap的值
+## 4.3 遍历TreeMap的值
 
 第一步：根据value()获取TreeMap的“值”的集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是TreeMap对象
 // map中的key是String类型，value是Integer类型
 Integer value = null;
@@ -3732,11 +3728,11 @@ public class TreeMapIteratorTest {
 ```
    
 
-## TreeMap示例
+# TreeMap示例
 
 下面通过实例来学习如何使用TreeMap
 
-```
+```java
 import java.util.*;
 
 /**
@@ -3892,7 +3888,7 @@ public class TreeMapTest  {
 
 运行结果：
 
-```
+```java
 {one=8, three=4, two=2}
 next : one - 8
 next : three - 4

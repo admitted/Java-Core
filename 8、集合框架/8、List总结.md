@@ -4,8 +4,6 @@
 
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14955300758588.jpg)
 
-
-
 1. List 是一个接口，它继承于Collection的接口。它代表着有序的队列。
 
 2. AbstractList 是一个抽象类，它继承于AbstractCollection。AbstractList实现List接口中除size()、get(int location)之外的函数。
@@ -32,7 +30,7 @@
 
 通过下面的测试程序，我们来验证上面的(01)和(02)结论。参考代码如下：
 
-```
+```java
 import java.util.*;
 import java.lang.Class;
 
@@ -132,7 +130,7 @@ public class ListCompareTest {
 
 运行结果如下：
 
-```
+```java
 Stack : insert 100000 elements into the 1st position use time：1640 ms
 Vector : insert 100000 elements into the 1st position use time：1607 ms
 LinkedList : insert 100000 elements into the 1st position use time：29 ms
@@ -155,13 +153,13 @@ ArrayList : delete 100000 elements from the 1st position use time：1909 ms
 遍历10万个元素，LinkedList所花时间最长：10809 ms；而ArrayList、Stack和Vector则相差不多，都只用了几秒。
  
 
-## LinkedList和ArrayList性能差异分析
+# LinkedList和ArrayList性能差异分析
 
-### 为什么LinkedList中插入元素很快，而ArrayList中插入元素很慢！
+## 为什么LinkedList中插入元素很快，而ArrayList中插入元素很慢！
 
 `LinkedList.java`中向指定位置插入元素的代码如下：
 
-```
+```java
 // 在index前添加节点，且节点的值为element
 public void add(int index, E element) {
     addBefore(element, (index==size ? header : entry(index)));
@@ -205,7 +203,7 @@ private Entry<E> addBefore(E e, Entry<E> entry) {
 
 接着，我们看看ArrayList.java中向指定位置插入元素的代码。如下：
 
-```
+```java
 // 将e添加到ArrayList的指定位置
 public void add(int index, E element) {
     if (index > size || index < 0)
@@ -221,20 +219,20 @@ public void add(int index, E element) {
 ```
 耗时的操作是 :
 
-```
+```java
 System.arraycopy(elementData, index, elementData, index + 1, size - index);
 ```
 
 Sun JDK包的java/lang/System.java中的arraycopy()声明如下：
 
-```
+```java
 public static native void arraycopy(Object src, int srcPos, Object dest, int destPos, int length);
 ```
 arraycopy()是个JNI函数，它是在JVM中实现的。sunJDK中看不到源码，不过可以在OpenJDK包中看到的源码。网上有对arraycopy()的分析说明，请参考：System.arraycopy源码分析 。
 
 实际上，我们只需要了解： 
 
-```
+```java
 System.arraycopy(elementData, index, elementData, index + 1, size - index);
 ```
 会移动index之后所有元素即可。这就意味着，`ArrayList的add(int index, E element)`函数，会引起index之后所有元素的改变！
@@ -249,7 +247,7 @@ System.arraycopy(elementData, index, elementData, index + 1, size - index);
 
 先看看LinkedList随机访问的代码
 
-```
+```java
 // 返回LinkedList指定位置的元素
 public E get(int index) {
     return entry(index).element;
@@ -279,7 +277,7 @@ private Entry<E> entry(int index) {
 
 下面看看ArrayList随机访问的代码 
 
-```
+```java
 // 获取index位置的元素值
 public E get(int index) {
     RangeCheck(index);
@@ -297,16 +295,16 @@ private void RangeCheck(int index) {
 
  
 
-## Vector和ArrayList比较
+# Vector和ArrayList比较
 
-### 相同之处
+## 相同之处
 
-#### 1、它们都是List
+### 它们都是List
 
 它们都继承于AbstractList，并且实现List接口。
 ArrayList和Vector的类定义如下：
 
-```
+```java
 // ArrayList的定义
 public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable
@@ -317,18 +315,18 @@ public class Vector<E> extends AbstractList<E>
 ```
   
 
-#### 2、它们都实现了RandomAccess和Cloneable接口
+### 它们都实现了RandomAccess和Cloneable接口
 
    实现RandomAccess接口，意味着它们都支持快速随机访问；
    实现Cloneable接口，意味着它们能克隆自己。
 
  
 
-#### 3、它们都是通过数组实现的，本质上都是动态数组
+### 它们都是通过数组实现的，本质上都是动态数组
 
 ArrayList.java中定义数组elementData用于保存元素
 
-```
+```java
 // 保存ArrayList中数据的数组
 private transient Object[] elementData;
 Vector.java中也定义了数组elementData用于保存元素
@@ -337,11 +335,11 @@ Vector.java中也定义了数组elementData用于保存元素
 protected Object[] elementData;
 ```
 
-#### 4、它们的默认数组容量是10
+### 它们的默认数组容量是10
 
 若创建ArrayList或Vector时，没指定容量大小；则使用默认容量大小10。
 
-```
+```java
 // ArrayList构造函数。默认容量是10。
 public ArrayList() {
     this(10);
@@ -353,15 +351,15 @@ public Vector() {
 } 
 ```
 
-#### 5、它们都支持Iterator和listIterator遍历
+### 它们都支持Iterator和listIterator遍历
 
 它们都继承于AbstractList，而AbstractList中分别实现了 “iterator()接口返回Iterator迭代器” 和 “listIterator()返回ListIterator迭代器”。
 
  
 
-### 不同之处
+## 不同之处
 
-#### 1、线程安全性不一样
+### 线程安全性不一样
 
 ArrayList是非线程安全；
 而Vector是线程安全的，它的函数都是synchronized的，即都是支持同步的。
@@ -369,19 +367,19 @@ ArrayList适用于单线程，Vector适用于多线程。
 
  
 
-#### 2、对序列化支持不同
+### 对序列化支持不同
 
 ArrayList支持序列化，而Vector不支持；即ArrayList有实现java.io.Serializable接口，而Vector没有实现该接口。
 
  
 
-#### 3、构造函数个数不同
+### 构造函数个数不同
 
 ArrayList有3个构造函数，而Vector有4个构造函数。Vector除了包括和ArrayList类似的3个构造函数之外，另外的一个构造函数可以指定容量增加系数。
 
 ArrayList的构造函数如下：
 
-```
+```java
 // 默认构造函数
 ArrayList()
 
@@ -394,7 +392,7 @@ ArrayList(Collection<? extends E> collection)
 
 Vector的构造函数如下：
 
-```
+```java
 // 默认构造函数
 Vector()
 
@@ -409,7 +407,7 @@ Vector(int capacity, int capacityIncrement)
 ```
  
 
-#### 4、容量增加方式不同
+### 4、容量增加方式不同
 
 逐个添加元素时，若ArrayList容量不足时，“新的容量”=“(原始容量x3)/2 + 1”。
 
@@ -417,7 +415,7 @@ Vector(int capacity, int capacityIncrement)
 
 ArrayList中容量增长的主要函数如下：
 
-```
+```java
 public void ensureCapacity(int minCapacity) {
     // 将“修改统计数”+1
     modCount++;
@@ -435,7 +433,7 @@ public void ensureCapacity(int minCapacity) {
 
 Vector中容量增长的主要函数如下：
 
-```
+```java
 private void ensureCapacityHelper(int minCapacity) {
     int oldCapacity = elementData.length;
     // 当Vector的容量不足以容纳当前的全部元素，增加容量大小。
@@ -454,11 +452,11 @@ private void ensureCapacityHelper(int minCapacity) {
 ```
  
 
-#### 5、对Enumeration的支持不同。Vector支持通过Enumeration去遍历，而List不支持
+### 5、对Enumeration的支持不同。Vector支持通过Enumeration去遍历，而List不支持
 
 Vector中实现Enumeration的代码如下：
 
-```
+```java
 public Enumeration<E> elements() {
     // 通过匿名类实现Enumeration
     return new Enumeration<E>() {

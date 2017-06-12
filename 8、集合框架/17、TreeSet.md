@@ -1,6 +1,4 @@
-# TreeSet
-
-## TreeSet简介
+# TreeSet简介
 
 TreeSet 是一个有序的集合，它的作用是提供有序的Set集合。它继承于AbstractSet抽象类，实现了NavigableSet<E>, Cloneable, java.io.Serializable接口。
 
@@ -14,8 +12,8 @@ TreeSet为基本操作（add、remove 和 contains）提供受保证的 log(n) �
 另外，TreeSet是非同步的。 它的iterator 方法返回的迭代器是fail-fast的。
 
 
-### TreeSet的构造函数
-```
+# TreeSet的构造函数
+```java
 // 默认构造函数。使用该构造函数，TreeSet中的元素按照自然排序进行排列。
 TreeSet()
 
@@ -29,8 +27,8 @@ TreeSet(Comparator<? super E> comparator)
 TreeSet(SortedSet<E> set)
 ```
 
-### TreeSet的API
-```
+# TreeSet的API
+```java
 boolean                   add(E object)
 boolean                   addAll(Collection<? extends E> collection)
 void                      clear()
@@ -67,10 +65,11 @@ SortedSet<E>              tailSet(E start)
 
  
 
-## TreeSet数据结构
+# TreeSet数据结构
 
-### TreeSet的继承关系
-```
+TreeSet的继承关系
+
+```java
 java.lang.Object
    ↳     java.util.AbstractCollection<E>
          ↳     java.util.AbstractSet<E>
@@ -80,21 +79,20 @@ public class TreeSet<E> extends AbstractSet<E>
     implements NavigableSet<E>, Cloneable, java.io.Serializable{}
 ```
  
+TreeSet与Collection关系图：
 
-### TreeSet与Collection关系图：
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-08-14969332446589.jpg)
-
 
 从图中可以看出：
 
 1. TreeSet继承于AbstractSet，并且实现了NavigableSet接口。
 2. TreeSet的本质是一个"有序的，并且没有重复元素"的集合，它是通过TreeMap实现的。TreeSet中含有一个"NavigableMap类型的成员变量"m，而m实际上是"TreeMap的实例"。
 
-## TreeSet源码解析(基于JDK1.6.0_45)
+# TreeSet源码解析(基于JDK1.6.0_45)
 
 为了更了解TreeSet的原理，下面对TreeSet源码代码作出分析。
 
-```
+```java
 package java.util;
 
 public class TreeSet<E> extends AbstractSet<E>
@@ -341,25 +339,25 @@ public class TreeSet<E> extends AbstractSet<E>
 2. TreeSet是非线程安全的。
 3. TreeSet实现java.io.Serializable的方式。当写入到输出流时，依次写入“比较器、容量、全部元素”；当读出输入流时，再依次读取。
 
-## TreeSet遍历方式
+# TreeSet遍历方式
 
-### Iterator顺序遍历
-```
+## Iterator顺序遍历
+```java
 for(Iterator iter = set.iterator(); iter.hasNext(); ) { 
     iter.next();
 } 
 ```
   
-### Iterator倒序遍历
-```
+## Iterator倒序遍历
+```java
 // 假设set是TreeSet对象
 for(Iterator iter = set.descendingIterator(); iter.hasNext(); ) { 
     iter.next();
 }
 ```
 
-### for-each遍历HashSet
-```
+## for-each遍历HashSet
+```java
 // 假设set是TreeSet对象，并且set中元素是String类型
 String[] arr = (String[])set.toArray(new String[0]);
 for (String str:arr)
@@ -370,7 +368,7 @@ TreeSet不支持快速随机遍历，只能通过迭代器进行遍历！
  
 TreeSet遍历测试程序如下：
 
-```
+```java
 import java.util.*;
 
 /**
@@ -425,7 +423,7 @@ public class TreeSetIteratorTest {
 
 运行结果：
 
-```
+```java
  ---- Ascend Iterator ----
 asc : aaa
 asc : bbb
@@ -449,11 +447,11 @@ for each : eee
 ```
  
 
-## TreeSet示例
+# TreeSet示例
 
 下面通过实例学习如何使用TreeSet
 
-```
+```java
 import java.util.*;
 
 /**
@@ -543,7 +541,7 @@ public class TreeSetTest {
 ```
 运行结果： 
 
-```
+```java
 TreeSet:[aaa, bbb, ccc, ddd, eee]
 size : 5
 floor bbb: bbb

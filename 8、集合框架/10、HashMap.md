@@ -1,6 +1,4 @@
-# HashMap
-
-## HashMap简介
+# HashMap简介
 
 HashMap 是一个散列表，它存储的内容是键值对(key-value)映射。
 HashMap 继承于AbstractMap，实现了`Map、Cloneable、java.io.Serializable`接口。
@@ -12,11 +10,11 @@ HashMap 的实例有两个参数影响其性能：“初始容量” 和 “加�
 通常，默认加载因子是 0.75, 这是在时间和空间成本上寻求一种折衷。加载因子过高虽然减少了空间开销，但同时也增加了查询成本（在大多数 HashMap 类的操作中，包括 get 和 put 操作，都反映了这一点）。在设置初始容量时应该考虑到映射中所需的条目数及其加载因子，以便最大限度地减少 rehash 操作次数。如果初始容量大于最大条目数除以加载因子，则不会发生 rehash 操作。
 
  
-## HashMap的构造函数
+# HashMap的构造函数
 
 HashMap共有4个构造函数,如下：
 
-```
+```java
 // 默认构造函数。
 public HashMap() {
     // 设置“加载因子”
@@ -69,8 +67,8 @@ public HashMap(Map<? extends K, ? extends V> m) {
 ```
  
 
-## HashMap的API
-```
+# HashMap的API
+```java
 void                 clear()
 Object               clone()
 boolean              containsKey(Object key)
@@ -87,11 +85,11 @@ Collection<V>        values()
 ```
  
 
-## HashMap数据结构
+# HashMap数据结构
 
 HashMap的继承关系
 
-```
+```java
 java.lang.Object
    ↳     java.util.AbstractMap<K, V>
          ↳     java.util.HashMap<K, V>
@@ -117,12 +115,12 @@ HashMap与Map关系如下图：
     5. **modCount**是用来实现fail-fast机制的。
 
 
-## HashMap源码解析
+# HashMap源码解析
 
 为了更了解HashMap的原理，下面对HashMap源码代码作出分析。
 在阅读源码时，建议参考后面的说明来建立对HashMap的整体认识，这样更容易理解HashMap。
 
-```
+```java
 package java.util;
 import java.io.*;
 
@@ -889,19 +887,19 @@ public class HashMap<K,V>
 还需要再补充说明的一点是影响HashMap性能的有两个参数：初始容量(**initialCapacity**) 和加载因子(**loadFactor**)。容量 是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。加载因子 是哈希表在其容量自动增加之前可以达到多满的一种尺度。当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行 rehash 操作（即重建内部数据结构），从而哈希表将具有大约两倍的桶数。
 
 
-### HashMap的“拉链法”相关内容
+## HashMap的“拉链法”相关内容
 
-#### 1、HashMap数据存储数组
-```
+### 1、HashMap数据存储数组
+```java
 transient Entry[] table;
 ```
 HashMap中的key-value都是存储在Entry数组中的。
 
-#### 2、数据节点Entry的数据结构
-##### 结构图表
+### 2、数据节点Entry的数据结构
+#### 结构图表
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14967626283955.jpg)
 
-```
+```java
 static class Entry<K,V> implements Map.Entry<K,V> {
     final K key;
     V value;
@@ -974,13 +972,13 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 从中，我们可以看出 Entry 实际上就是一个单向链表。这也是为什么我们说HashMap是通过拉链法解决哈希冲突的。
 Entry 实现了Map.Entry 接口，即实现getKey(), getValue(), setValue(V value), equals(Object o), hashCode()这些函数。这些都是基本的读取/修改key、value值的函数。
 
-### HashMap的主要对外接口
+## HashMap的主要对外接口
 
-#### clear()
+### clear()
 
 clear() 的作用是清空HashMap。它是通过将所有的元素设为null来实现的。
 
-```
+```java
 public void clear() {
     modCount++;
     Entry[] tab = table;
@@ -990,11 +988,11 @@ public void clear() {
 }
 ```
 
-#### containsKey()
+### containsKey()
 
 containsKey() 的作用是判断HashMap是否包含key。
 
-```
+```java
 public boolean containsKey(Object key) {
     return getEntry(key) != null;
 }
@@ -1002,7 +1000,7 @@ public boolean containsKey(Object key) {
 containsKey() 首先通过getEntry(key)获取key对应的Entry，然后判断该Entry是否为null。
 getEntry()的源码如下：
 
-```
+```java
 final Entry<K,V> getEntry(Object key) {
     // 获取哈希值
     // HashMap将“key为null”的元素存储在table[0]位置，“key不为null”的则调用hash()计算哈希值
@@ -1023,11 +1021,11 @@ getEntry() 的作用就是返回“键为key”的键值对，它的实现源码
 这里需要强调的是：HashMap将“key为null”的元素都放在table的位置0处，即table[0]中；“key不为null”的放在table的其余位置！
 
 
-#### containsValue()
+### containsValue()
 
 containsValue() 的作用是判断HashMap是否包含“值为value”的元素。
 
-```
+```java
 public boolean containsValue(Object value) {
     // 若“value为null”，则调用containsNullValue()查找
     if (value == null)
@@ -1046,7 +1044,7 @@ public boolean containsValue(Object value) {
 
 containsNullValue() 的作用判断HashMap中是否包含“值为null”的元素。
 
-```
+```java
 private boolean containsNullValue() {
     Entry[] tab = table;
     for (int i = 0; i < tab.length ; i++)
@@ -1058,12 +1056,12 @@ private boolean containsNullValue() {
 ```
  
 
-#### entrySet()、values()、keySet()
+### entrySet()、values()、keySet()
 
 它们3个的原理类似，这里以entrySet()为例来说明。
 entrySet()的作用是返回“HashMap中所有Entry的集合”，它是一个集合。实现代码如下：
 
-```
+```java
 // 返回“HashMap的Entry集合”
 public Set<Map.Entry<K,V>> entrySet() {
     return entrySet0();
@@ -1105,7 +1103,7 @@ HashMap是通过拉链法实现的散列表。表现在HashMap包括许多的Ent
 下面我们就看看HashMap是如何通过entrySet()遍历的。
 entrySet()实际上是通过newEntryIterator()实现的。 下面我们看看它的代码：
 
-```
+```java
 // 返回一个“entry迭代器”
 Iterator<Map.Entry<K,V>> newEntryIterator()   {
     return new EntryIterator();
@@ -1182,11 +1180,11 @@ private abstract class HashIterator<E> implements Iterator<E> {
 ```
 当我们通过entrySet()获取到的Iterator的next()方法去遍历HashMap时，实际上调用的是 nextEntry() 。而nextEntry()的实现方式，先遍历Entry(根据Entry在table中的序号，从小到大的遍历)；然后对每个Entry(即每个单向链表)，逐个遍历。
 
-#### get()
+### get()
 
 get() 的作用是获取key对应的value，它的实现代码如下：
 
-```
+```java
 public V get(Object key) {
     if (key == null)
         return getForNullKey();
@@ -1205,11 +1203,11 @@ public V get(Object key) {
 ```
  
 
-#### put()
+### put()
 
 put() 的作用是对外提供接口，让HashMap对象可以通过put()将“key-value”添加到HashMap中。
 
-```
+```java
 public V put(K key, V value) {
     // 若“key为null”，则将该键值对添加到table[0]中。
     if (key == null)
@@ -1238,7 +1236,7 @@ public V put(K key, V value) {
 若要添加到HashMap中的键值对对应的key不在HashMap中，则将其添加到该哈希值对应的链表中，并调用addEntry()。
 下面看看addEntry()的代码：
 
-```
+```java
 void addEntry(int hash, K key, V value, int bucketIndex) {
     // 保存“bucketIndex”位置的值到“e”中
     Entry<K,V> e = table[bucketIndex];
@@ -1254,7 +1252,7 @@ addEntry() 的作用是新增Entry。将“key-value”插入指定位置，buck
 
 说到addEntry()，就不得不说另一个函数createEntry()。createEntry()的代码如下：
 
-```
+```java
 void createEntry(int hash, K key, V value, int bucketIndex) {
     // 保存“bucketIndex”位置的值到“e”中
     Entry<K,V> e = table[bucketIndex];
@@ -1266,7 +1264,7 @@ void createEntry(int hash, K key, V value, int bucketIndex) {
 ```
 它们的作用都是将key、value添加到HashMap中。而且，比较addEntry()和createEntry()的代码，我们发现addEntry()多了两句：
 
-```
+```java
 if (size++ >= threshold)
     resize(2 * table.length);
 ```
@@ -1283,11 +1281,11 @@ if (size++ >= threshold)
        但在添加之前，我们已经计算好“HashMap的容量和阈值”。也就是，可以确定“即使将Map中的全部元素添加到HashMap中，都不会超过HashMap的阈值”。
        此时，调用createEntry()即可。
 
-#### putAll()
+### putAll()
 
 putAll() 的作用是将"m"的全部元素都添加到HashMap中，它的代码如下：
 
-```
+```java
 public void putAll(Map<? extends K, ? extends V> m) {
     // 有效性判断
     int numKeysToBeAdded = m.size();
@@ -1316,11 +1314,11 @@ public void putAll(Map<? extends K, ? extends V> m) {
 ```
  
 
-3.3.8 remove()
+### remove()
 
 remove() 的作用是删除“键为key”元素
 
-```
+```java
 public V remove(Object key) {
     Entry<K,V> e = removeEntryForKey(key);
     return (e == null ? null : e.value);
@@ -1360,12 +1358,12 @@ final Entry<K,V> removeEntryForKey(Object key) {
 ```
  
 
-### HashMap实现的Cloneable接口
+## HashMap实现的Cloneable接口
 
 HashMap实现了Cloneable接口，即实现了clone()方法。
 clone()方法的作用很简单，就是克隆一个HashMap对象并返回。
 
-```
+```java
 // 克隆一个HashMap，并返回Object对象
 public Object clone() {
     HashMap<K,V> result = null;
@@ -1387,13 +1385,13 @@ public Object clone() {
 ```
  
 
-### HashMap实现的Serializable接口
+## HashMap实现的Serializable接口
 
 HashMap实现java.io.Serializable，分别实现了串行读取、写入功能。
 串行写入函数是writeObject()，它的作用是将HashMap的“总的容量，实际容量，所有的Entry”都写入到输出流中。
 而串行读取函数是readObject()，它的作用是将HashMap的“总的容量，实际容量，所有的Entry”依次读出
 
-```
+```java
 // java.io.Serializable的写入函数
 // 将HashMap的“总的容量，实际容量，所有的Entry”都写入到输出流中
 private void writeObject(java.io.ObjectOutputStream s)
@@ -1448,14 +1446,14 @@ private void readObject(java.io.ObjectInputStream s)
 ```
  
 
-## HashMap遍历方式
+# HashMap遍历方式
 
-### 遍历HashMap的键值对
+## 遍历HashMap的键值对
 
 第一步：根据entrySet()获取HashMap的“键值对”的Set集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是HashMap对象
 // map中的key是String类型，value是Integer类型
 Integer integ = null;
@@ -1469,12 +1467,12 @@ while(iter.hasNext()) {
 }
 ```
 
-### 遍历HashMap的键
+## 遍历HashMap的键
 
 第一步：根据keySet()获取HashMap的“键”的Set集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是HashMap对象
 // map中的key是String类型，value是Integer类型
 String key = null;
@@ -1488,12 +1486,12 @@ while (iter.hasNext()) {
 }
 ```
 
-### 遍历HashMap的值
+## 遍历HashMap的值
 
 第一步：根据value()获取HashMap的“值”的集合。
 第二步：通过Iterator迭代器遍历“第一步”得到的集合。
 
-```
+```java
 // 假设map是HashMap对象
 // map中的key是String类型，value是Integer类型
 Integer value = null;
@@ -1506,7 +1504,7 @@ while (iter.hasNext()) {
  
 遍历测试程序如下：
 
-```
+```java
 import java.util.Map;
 import java.util.Random;
 import java.util.Iterator;
@@ -1613,11 +1611,11 @@ public class HashMapIteratorTest {
 ```
  
 
-## HashMap示例
+# HashMap示例
 
 下面通过一个实例学习如何使用HashMap
 
-```
+```java
 import java.util.Map;
 import java.util.Random;
 import java.util.Iterator;
@@ -1682,7 +1680,7 @@ public class HashMapTest {
 ```
  (某一次)运行结果： 
 
-```
+```java
 map:{two=7, one=9, three=6}
 next : two - 7
 next : one - 9

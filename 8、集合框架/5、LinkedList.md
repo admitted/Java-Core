@@ -1,6 +1,4 @@
-# LinkedList
-
-## LinkedList简介
+# LinkedList简介
 
 * LinkedList 是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。
 * LinkedList 实现 List 接口，能对它进行队列操作。
@@ -10,8 +8,8 @@
 * LinkedList 是非同步的。
 
  
-## LinkedList构造函数
-```
+# LinkedList构造函数
+```java
 // 默认构造函数
 LinkedList()
 
@@ -19,8 +17,8 @@ LinkedList()
 LinkedList(Collection<? extends E> collection)
 ```
 
-## LinkedList的API 
-```
+# LinkedList的API 
+```java
 // LinkedList的API
 boolean       add(E object)
 void          add(int location, E object)
@@ -63,7 +61,7 @@ int           size()
 Object[]      toArray()
 ```
  
-## AbstractSequentialList简介
+# AbstractSequentialList简介
 
 在介绍LinkedList的源码之前，先介绍一下AbstractSequentialList。毕竟，LinkedList是AbstractSequentialList的子类。
 
@@ -71,11 +69,11 @@ AbstractSequentialList 实现了`get(int index)、set(int index, E element)、ad
 
 此外，我们若需要通过AbstractSequentialList自己实现一个列表，只需要扩展此类，并提供 listIterator() 和 size() 方法的实现即可。若要实现不可修改的列表，则需要实现列表迭代器的 hasNext、next、hasPrevious、previous 和 index 方法即可。
 
-## LinkedList数据结构
+# LinkedList数据结构
 
-### LinkedList的继承关系
+## LinkedList的继承关系
 
-```
+```java
 java.lang.Object
    ↳     java.util.AbstractCollection<E>
          ↳     java.util.AbstractList<E>
@@ -88,7 +86,7 @@ public class LinkedList<E>
     implements List<E>, Deque<E>, Cloneable, java.io.Serializable {}
 ```
  
-### LinkedList与Collection关系图：
+## LinkedList与Collection关系图：
 
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14954627364690.jpg)
 
@@ -102,7 +100,7 @@ header是双向链表的表头，它是双向链表节点所对应的类Entry的
 size是双向链表中节点的个数。
 
  
-## LinkedList源码解析(基于JDK1.6.0_45)
+# LinkedList源码解析(基于JDK1.6.0_45)
 
 为了更了解LinkedList的原理，下面对LinkedList源码代码作出分析。
 
@@ -118,7 +116,7 @@ LinkedList是如何实现List的这些接口的，如何将“双向链表和索
 
 好了，接下来开始阅读源码(只要理解双向链表，那么LinkedList的源码很容易理解的)。
 
- ```
+ ```java
 package java.util;
 
 public class LinkedList<E>
@@ -803,45 +801,45 @@ public class LinkedList<E>
 |peek()     |  peekFirst()|
  
 
-## LinkedList遍历方式
+# LinkedList遍历方式
 
 LinkedList遍历方式
 
 LinkedList支持多种遍历方式。建议不要采用随机访问的方式去遍历LinkedList，而采用逐个遍历的方式。
 
-### 第一种，通过迭代器遍历。即通过Iterator去遍历。
-```
+## 第一种，通过迭代器遍历。即通过Iterator去遍历。
+```java
 for(Iterator iter = list.iterator(); iter.hasNext();)
     iter.next();
 ```
 
-### 第二种，通过快速随机访问遍历LinkedList
-```
+## 第二种，通过快速随机访问遍历LinkedList
+```java
 int size = list.size();
 for (int i=0; i<size; i++) {
     list.get(i);        
 }
 ```
-### 第三种，通过另外一种for循环来遍历LinkedList
-```
+## 第三种，通过另外一种for循环来遍历LinkedList
+```java
 for (Integer integ:list) 
     ;
 ```
 
-### 通过pollFirst()来遍历LinkedList
-```
+## 通过pollFirst()来遍历LinkedList
+```java
 while(list.pollFirst() != null)
     ;
 ```
 
-### 通过pollLast()来遍历LinkedList
-```
+## 通过pollLast()来遍历LinkedList
+```java
 while(list.pollLast() != null)
     ;
 ```
 
-### 通过removeFirst()来遍历LinkedList
-```
+## 通过removeFirst()来遍历LinkedList
+```java
 try {
     while(list.removeFirst() != null)
         ;
@@ -849,8 +847,8 @@ try {
 }
 ```
 
-### 通过removeLast()来遍历LinkedList
-```
+## 通过removeLast()来遍历LinkedList
+```java
 try {
     while(list.removeLast() != null)
         ;
@@ -860,7 +858,7 @@ try {
 
 测试这些遍历方式效率的代码如下：
 
- ```
+ ```java
 import java.util.List;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -1042,7 +1040,7 @@ public class LinkedListThruTest {
  ```
 执行结果：
 
-```
+```java
 iteratorLinkedListThruIterator：8 ms
 iteratorLinkedListThruForeach：3724 ms
 iteratorThroughFor2：5 ms
@@ -1060,7 +1058,7 @@ iteratorThroughRemoveLast：2 ms
 ## LinkedList示例
 下面通过一个示例来学习如何使用LinkedList的常用API 
 
-```
+```java
 import java.util.List;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -1222,7 +1220,7 @@ public class LinkedListTest {
 ```
 运行结果
 
-```
+```java
 Test "addFirst(), removeFirst(), getFirst()"
 llist:[10, 1, 4, 2, 3]
 llist.removeFirst():10

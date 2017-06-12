@@ -1,20 +1,18 @@
-# HashSet
-
-## HashSet 简介
+# HashSet 简介
 
 HashSet 是一个没有重复元素的集合。
 
 它是由HashMap实现的，不保证元素的顺序，而且HashSet允许使用 null 元素。
 HashSet是非同步的。如果多个线程同时访问一个哈希 set，而其中至少一个线程修改了该 set，那么它必须 保持外部同步。这通常是通过对自然封装该 set 的对象执行同步操作来完成的。如果不存在这样的对象，则应该使用 Collections.synchronizedSet 方法来“包装” set。最好在创建时完成这一操作，以防止对该 set 进行意外的不同步访问：
 
-```
+```java
 Set s = Collections.synchronizedSet(new HashSet(...));
 ```
 HashSet通过iterator()返回的迭代器是fail-fast的。
 
 
-### HashSet的构造函数
-```
+# HashSet的构造函数
+```java
  // 默认构造函数
 public HashSet() 
 
@@ -31,8 +29,8 @@ public HashSet(int initialCapacity)
 HashSet(int initialCapacity, float loadFactor, boolean dummy) 
 ```
 
-### HashSet的主要API
-```
+# HashSet的主要API
+```java
 boolean         add(E object)
 void            clear()
 Object          clone()
@@ -44,10 +42,10 @@ int             size()
 ```
  
 
-## HashSet数据结构
+# HashSet数据结构
 
-### HashSet的继承关系如下：
-```
+HashSet的继承关系如下：
+```java
 java.lang.Object
    ↳     java.util.AbstractCollection<E>
          ↳     java.util.AbstractSet<E>
@@ -58,8 +56,8 @@ public class HashSet<E>
     implements Set<E>, Cloneable, java.io.Serializable { }
 ```
  
+HashSet与Map关系图：
 
-### HashSet与Map关系图：
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-08-14969314205402.jpg)
 
 从图中可以看出：
@@ -67,10 +65,10 @@ public class HashSet<E>
 1. HashSet继承于AbstractSet，并且实现了Set接口。
 2. HashSet的本质是一个"没有重复元素"的集合，它是通过HashMap实现的。HashSet中含有一个"HashMap类型的成员变量"map，HashSet的操作函数，实际上都是通过map实现的。
 
-## HashSet源码解析(基于JDK1.6.0_45)
+# HashSet源码解析(基于JDK1.6.0_45)
 为了更了解HashSet的原理，下面对HashSet源码代码作出分析。
 
-```
+```java
 package java.util;
 
 public class HashSet<E>
@@ -217,14 +215,14 @@ public class HashSet<E>
 
  
 
-## HashSet遍历方式
+# HashSet遍历方式
 
-### 通过Iterator遍历HashSet
+## 通过Iterator遍历HashSet
 
 第一步：根据iterator()获取HashSet的迭代器。
 第二步：遍历迭代器获取各个元素。
 
-```
+```java
 // 假设set是HashSet对象
 for(Iterator iterator = set.iterator();
        iterator.hasNext(); ) { 
@@ -233,7 +231,7 @@ for(Iterator iterator = set.iterator();
 ```  
  
 
-### 通过for-each遍历HashSet
+## 通过for-each遍历HashSet
 
 第一步：根据toArray()获取HashSet的元素集合对应的数组。
 第二步：遍历数组，获取各个元素。
@@ -244,7 +242,7 @@ for (String str:arr)
     System.out.printf("for each : %s\n", str);
 HashSet的遍历测试程序如下： 
 
-```
+```java
 import java.util.Random;
 import java.util.Iterator;
 import java.util.HashSet;
@@ -293,7 +291,7 @@ public class HashSetIteratorTest {
 ```
 运行结果： 
 
-```
+```java
 iterator : 3
 iterator : 2
 iterator : 1
@@ -307,11 +305,11 @@ for each : 4
 ```
  
 
-## HashSet示例
+# HashSet示例
 
 下面我们通过实例学习如何使用HashSet
 
-```
+```java
 import java.util.Iterator;
 import java.util.HashSet;
 
@@ -393,7 +391,7 @@ public class HashSetTest {
 
 运行结果： 
 
-```
+```java
 size : 5
 HashSet contains a :true
 HashSet contains g :false

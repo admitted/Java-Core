@@ -22,7 +22,7 @@
 
 Map的定义如下：
 
-```
+```java
 public interface Map<K,V> { }
 ```
 Map 是一个键值对(key-value)映射接口。Map映射中不能包含重复的键；每个键最多只能映射到一个值。
@@ -35,7 +35,7 @@ Map 的实现类应该提供2个“标准的”构造方法：第一个，void�
 
 
 ### Map的API
-```
+```java
 abstract void                 clear()
 abstract boolean              containsKey(Object key)
 abstract boolean              containsValue(Object value)
@@ -67,13 +67,13 @@ abstract Collection<V>        values()
 
 ### Map.Entry的定义：
 
-```
+```java
 interface Entry<K,V> { }
 ```
 Map.Entry是Map中内部的一个接口，Map.Entry是键值对，Map通过 entrySet() 获取Map.Entry的键值对集合，从而通过该集合实现对键值对的操作。
 
 ### Map.Entry的API
-```
+```java
 abstract boolean       equals(Object object)
 abstract K             getKey()
 abstract V             getValue()
@@ -85,7 +85,7 @@ abstract V             setValue(V object)
 
 ### AbstractMap的定义：
 
-```
+```java
 public abstract class AbstractMap<K,V> implements Map<K,V> {}
 ```
 AbstractMap类提供 Map 接口的骨干实现，以最大限度地减少实现此接口所需的工作。
@@ -96,7 +96,7 @@ AbstractMap类提供 Map 接口的骨干实现，以最大限度地减少实现�
 
  
 ### AbstractMap的API
-```
+```java
 abstract Set<Entry<K, V>>     entrySet()
          void                 clear()
          boolean              containsKey(Object key)
@@ -119,7 +119,7 @@ abstract Set<Entry<K, V>>     entrySet()
 ## 4、SortedMap
 
 ### SortedMap的定义：
-```
+```java
 public interface SortedMap<K,V> extends Map<K,V> { }
 ```
 SortedMap是一个继承于Map接口的接口。它是一个有序的SortedMap键值映射。
@@ -133,7 +133,7 @@ SortedMap 的排序方式有两种：自然排序 或者 用户指定比较器�
 4. 带有一个 SortedMap 类型参数的构造方法，它创建一个新的有序映射，其键-值映射关系和排序方法与输入的有序映射相同。无法保证强制实施此建议，因为接口不能包含构造方法。
 
 ### SortedMap的API
-```
+```java
 // 继承于Map的API
 abstract void                 clear()
 abstract boolean              containsKey(Object key)
@@ -162,14 +162,14 @@ abstract SortedMap<K, V>           tailMap(K startKey)
 ## 5、NavigableMap
 
 ### NavigableMap的定义：
-```
+```java
 public interface NavigableMap<K,V> extends SortedMap<K,V> { }
 ```
 NavigableMap是继承于SortedMap的接口。它是一个可导航的键-值对集合，具有了为给定搜索目标报告最接近匹配项的导航方法。
 NavigableMap分别提供了获取“键”、“键-值对”、“键集”、“键-值对集”的相关方法。
 
 ### NavigableMap的API
-```
+```java
 abstract Entry<K, V>             ceilingEntry(K key)
 abstract Entry<K, V>             firstEntry()
 abstract Entry<K, V>             floorEntry(K key)
@@ -213,14 +213,14 @@ NavigableMap除了继承SortedMap的特性外，它的提供的功能可以分�
 ## 6、Dictionary
 
 ### Dictionary的定义如下：
-```
+```java
 public abstract class Dictionary<K,V> {}
 ```
 NavigableMap是JDK 1.0定义的键值对的接口，它也包括了操作键值对的基本函数。
 
 
 ### Dictionary的API
-```
+```java
 abstract Enumeration<V>     elements()
 abstract V                  get(Object key)
 abstract boolean            isEmpty()

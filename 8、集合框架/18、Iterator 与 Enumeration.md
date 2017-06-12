@@ -1,6 +1,4 @@
-# Iteration 与 Enumeration
-
-## Iterator和Enumeration区别
+# Iterator和Enumeration区别
 
 在Java集合中，我们通常都通过 “Iterator(迭代器)” 或 “Enumeration(枚举类)” 去遍历集合。今天，我们就一起学习一下它们之间到底有什么区别。
 
@@ -8,7 +6,7 @@
 
 Enumeration是一个接口，它的源码如下：
 
-```
+```java
 package java.util;
 
 public interface Enumeration<E> {
@@ -21,7 +19,7 @@ public interface Enumeration<E> {
 
 Iterator也是一个接口，它的源码如下：
 
-```
+```java
 package java.util;
 
 public interface Iterator<E> {
@@ -44,11 +42,11 @@ public interface Iterator<E> {
 
  
 
-## Iterator和Enumeration实例
+# Iterator和Enumeration实例
 
 下面，我们编写一个Hashtable，然后分别通过 Iterator 和 Enumeration 去遍历它，比较它们的效率。代码如下：
 
-```
+```Java
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -117,7 +115,7 @@ public class IteratorEnumeration {
 ```
 运行结果如下：
 
-```
+```java
 time: 9ms
 time: 5ms
 ```

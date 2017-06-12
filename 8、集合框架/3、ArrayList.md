@@ -1,8 +1,6 @@
-# ArrayList
+# ArrayList简介
 
-## ArrayList简介
-
-```
+```java
 public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 {}
@@ -20,9 +18,9 @@ ArrayList 实现`java.io.Serializable`接口，这意味着ArrayList支持序列
 和Vector不同，**ArrayList中的操作不是线程安全的！**所以，建议在单线程中才使用ArrayList，而在多线程中可以选择Vector或者CopyOnWriteArrayList。
 
  
-## ArrayList构造函数
+# ArrayList构造函数
 
-```
+```java
 // 默认构造函数
 ArrayList()
 
@@ -33,8 +31,8 @@ ArrayList(int capacity)
 ArrayList(Collection<? extends E> collection)
 ```
  
-## ArrayList的API
-```
+# ArrayList的API
+```java
 // Collection中定义的API
 boolean             add(E object)
 boolean             addAll(Collection<? extends E> collection)
@@ -74,7 +72,7 @@ void                 removeRange(int fromIndex, int toIndex)
 
 ArrayList的继承关系
 
-```
+```java
 java.lang.Object
    |___    java.util.AbstractCollection<E>
          |___    java.util.AbstractList<E>
@@ -84,7 +82,6 @@ public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable {}
 ```
 
- 
 ArrayList与Collection关系如下图：
 
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14954399703939.jpg)
@@ -96,11 +93,11 @@ ArrayList包含了两个重要的对象：elementData 和 size。
 2. size 则是动态数组的实际大小。
 
 
-## ArrayList源码解析(基于JDK1.6.0_45)
+# ArrayList源码解析(基于JDK1.6.0_45)
 
 为了更了解ArrayList的原理，下面对ArrayList源码代码作出分析。ArrayList是通过数组实现的，源码比较容易理解。 
 
-```
+```java
 package java.util;
 
 public class ArrayList<E> extends AbstractList<E>
@@ -465,30 +462,32 @@ public class ArrayList<E> extends AbstractList<E>
 
  
 
-## ArrayList遍历方式
+# ArrayList遍历方式
 
 ArrayList支持3种遍历方式
 
-### 第一种，通过迭代器遍历。即通过Iterator去遍历。
-```
+## 第一种，通过迭代器遍历。即通过Iterator去遍历。
+```java
 Integer value = null;
 Iterator iter = list.iterator();
 while (iter.hasNext()) {
     value = (Integer)iter.next();
 }
 ```
-### 第二种，随机访问，通过索引值去遍历。
+
+## 第二种，随机访问，通过索引值去遍历。
 由于ArrayList实现了RandomAccess接口，它支持通过索引值去随机访问元素。
 
-```
+```java
 Integer value = null;
 int size = list.size();
 for (int i=0; i<size; i++) {
     value = (Integer)list.get(i);        
 }
 ```
-### 第三种，for循环遍历。如下：
-```
+
+## 第三种，for循环遍历。如下：
+```java
 Integer value = null;
 for (Integer integ:list) {
     value = integ;
@@ -497,7 +496,7 @@ for (Integer integ:list) {
 
 下面通过一个实例，比较这3种方式的效率，实例代码：
 
-```
+```java
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -578,13 +577,13 @@ iteratorThroughFor2：5 ms
 
  
 
-## toArray()异常
+# toArray()异常
 
 当我们调用ArrayList中的 toArray()，可能遇到过出“java.lang.ClassCastException”异常的情况。下面我们说说这是怎么回事。
 
 ArrayList提供了2个toArray()函数：
 
-```
+```java
 Object[] toArray()
 <T> T[] toArray(T[] contents)
 ```
@@ -596,7 +595,7 @@ toArray() 会抛出异常是因为 toArray() 返回的是 Object[] 数组，将 
 
 调用 toArray(T[] contents) 返回T[]的可以通过以下几种方式实现。
 
- ```
+ ```java
  // toArray(T[] contents)调用方式一
 public static Integer[] vectorToArray1(ArrayList<Integer> v) {
     Integer[] newText = new Integer[v.size()];
@@ -619,11 +618,11 @@ public static Integer[] vectorToArray3(ArrayList<Integer> v) {
  ```
   
 
-## ArrayList示例
+# ArrayList示例
 
 本文通过一个实例(ArrayListTest.java)，介绍 ArrayList 中常用API的用法。 
 
-```
+```java
 import java.util.*;
 
 /*
@@ -675,7 +674,7 @@ public class ArrayListTest {
 }
 ```
 
-```
+```java
 the first element is: 5
 Arraylist size=: 4
 ArrayList contains 3 is: false

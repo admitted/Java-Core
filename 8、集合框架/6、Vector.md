@@ -1,6 +1,4 @@
-# Vector
-
-## Vector简介
+# Vector简介
 
 Vector 是矢量队列，它是JDK1.0版本添加的类。继承于AbstractList，实现了List, RandomAccess, Cloneable这些接口。
 
@@ -13,11 +11,11 @@ Vector 实现了Cloneable 接口，即实现clone()函数。它能被克隆。
 和ArrayList不同，Vector中的操作是线程安全的。
 
  
-## Vector的构造函数
+# Vector的构造函数
 
 Vector共有4个构造函数
 
-```
+```java
 // 默认构造函数
 Vector()
 
@@ -31,9 +29,9 @@ Vector(int capacity, int capacityIncrement)
 Vector(Collection<? extends E> collection)
 ```
   
-## Vector的API
+# Vector的API
 
-```
+```java
 synchronized boolean        add(E object)
              void           add(int location, E object)
 synchronized boolean        addAll(Collection<? extends E> collection)
@@ -78,11 +76,11 @@ synchronized void           trimToSize()
 ```
  
 
-## Vector数据结构
+# Vector数据结构
 
-### Vector的继承关系
+## Vector的继承关系
 
-```
+```java
 java.lang.Object
    ↳     java.util.AbstractCollection<E>
          ↳     java.util.AbstractList<E>
@@ -96,7 +94,7 @@ public class Vector<E>
 
  
 
-### Vector与Collection关系图：
+## Vector与Collection关系图：
 
 ![](http://oov0wb0gl.bkt.clouddn.com/2017-06-06-14955233195949.jpg)
 
@@ -110,11 +108,11 @@ Vector的数据结构和ArrayList差不多，它包含了3个成员变量：elem
 3. capacityIncrement 是动态数组的增长系数。如果在创建Vector时，指定了capacityIncrement的大小；则，每次当Vector中动态数组容量增加时，增加的大小都是capacityIncrement。
 
  
-## Vector源码解析(基于JDK1.6.0_45)
+# Vector源码解析(基于JDK1.6.0_45)
 
 为了更了解Vector的原理，下面对Vector源码代码作出分析。 
 
-```
+```java
 package java.util;
 
 public class Vector<E>
@@ -595,12 +593,12 @@ public class Vector<E>
 3. Vector的克隆函数，即是将全部元素克隆到一个数组中。
 
  
-## Vector遍历方式
+# Vector遍历方式
 
 Vector支持4种遍历方式。建议使用下面的第二种去遍历Vector，因为效率问题。
 
-### 第一种，通过迭代器遍历。即通过Iterator去遍历。
-```
+## 第一种，通过迭代器遍历。即通过Iterator去遍历。
+```java
 Integer value = null;
 int size = vec.size();
 for (int i=0; i<size; i++) {
@@ -608,10 +606,10 @@ for (int i=0; i<size; i++) {
 }
 ```
 
-### 第二种，随机访问，通过索引值去遍历。
+## 第二种，随机访问，通过索引值去遍历。
 由于Vector实现了RandomAccess接口，它支持通过索引值去随机访问元素。
 
-```
+```java
 Integer value = null;
 int size = vec.size();
 for (int i=0; i<size; i++) {
@@ -619,16 +617,16 @@ for (int i=0; i<size; i++) {
 }
 ``` 
 
-### 第三种，另一种for循环。如下：
-```
+## 第三种，另一种for循环。如下：
+```java
 Integer value = null;
 for (Integer integ:vec) {
     value = integ;
 }
 ``` 
 
-### 第四种，Enumeration遍历。如下： 
-```
+## 第四种，Enumeration遍历。如下： 
+```java
 Integer value = null;
 Enumeration enu = vec.elements();
 while (enu.hasMoreElements()) {
@@ -638,7 +636,8 @@ while (enu.hasMoreElements()) {
 
 测试这些遍历方式效率的代码如下：
 
-```import java.util.*;
+```java
+import java.util.*;
 
 /*
  * @desc Vector遍历方式和效率的测试程序。
@@ -723,7 +722,7 @@ public class VectorRandomAccessTest {
 ```
 运行结果：
 
-```
+```java
 iteratorThroughRandomAccess：6 ms
 iteratorThroughIterator：9 ms
 iteratorThroughFor2：8 ms
@@ -733,11 +732,11 @@ iteratorThroughEnumeration：7 ms
 总结：遍历Vector，使用索引的随机访问方式最快，使用迭代器最慢。
 
  
-第5部分 Vector示例
+# Vector示例
 
 下面通过示例学习如何使用Vector
 
-```
+```java
 import java.util.Vector;
 import java.util.List;
 import java.util.Iterator;
@@ -813,7 +812,7 @@ public class VectorTest {
 ```
 运行结果：
 
-```
+```java
 vec:[100, 2, 300, 3, 4, 5]
 vec.indexOf(100):0
 vec.lastIndexOf(100):0
